@@ -1,3 +1,4 @@
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -36,5 +37,15 @@ public class CalendarioInternazionale {
     public List<Evento> riordinaPerData(){
         listaEventi.sort(Comparator.comparing( l -> l.data));
         return listaEventi;
+    }
+
+    public List<Evento> trovaEventiInIntervallo( OffsetDateTime start, OffsetDateTime end ){
+        return listaEventi.stream().filter(p ->!p.getData().isBefore(start) && !p.getData().isAfter(end)).toList();
+
+    }
+
+    public Evento trovaEventoPiuVicinoa (OffsetDateTime data){
+        listaEventi.sort(Comparator.comparing(p -> (p.getData().getSecond() + data.getSecond())/2));
+        return listaEventi.get(0);
     }
 }
